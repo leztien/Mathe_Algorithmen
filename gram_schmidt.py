@@ -1,4 +1,8 @@
-"""Gram Schmidt Orthoganalization"""
+"""
+Gram Schmidt Orthoganalization
+and
+QR Decomposition
+"""
 
 
 import random
@@ -36,9 +40,26 @@ def gram_schmidt(A):
     return Q
 
 
-# Demo
-A = random_matrix()
-Q = gram_schmidt(A)
-print("Q is orthonormal:", is_orthonormal(Q), "\n")
-print(A, Q.round(2), sep="\n\n")
+def qr_decomposition(A):
+    Q = gram_schmidt(A)
+    R = np.dot(Q.T, A)
+    return Q,R
+
+
+if __name__ == '__main__':
+    
+    # Demo on Gram Schmidt orthoganalization
+    A = random_matrix()
+    Q = gram_schmidt(A)
+    print("Q is orthonormal:", is_orthonormal(Q), "\n")
+    print(A, Q.round(2), sep="\n\n")
+    
+    
+    # Demo on QR decomposition
+    Q, R = qr_decomposition(A)
+    print("\n\n\nmatreces A, Q, R, A-restored:", A, Q.round(2), R.round(2), np.dot(Q,R).round(1), sep="\n\n")
+    
+
+
+
 
