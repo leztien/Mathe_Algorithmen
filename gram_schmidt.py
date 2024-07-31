@@ -46,6 +46,12 @@ def qr_decomposition(A):
     return Q,R
 
 
+def inverse(A):
+    """Easier inversion of A, because the upper triangular matrix R is easier to inverse"""
+    Q,R = qr_decomposition(A)
+    return np.dot(np.linalg.inv(R), Q.T)
+
+
 if __name__ == '__main__':
     
     # Demo on Gram Schmidt orthoganalization
@@ -59,7 +65,4 @@ if __name__ == '__main__':
     Q, R = qr_decomposition(A)
     print("\n\n\nmatreces A, Q, R, A-restored:", A, Q.round(2), R.round(2), np.dot(Q,R).round(1), sep="\n\n")
     
-
-
-
 
