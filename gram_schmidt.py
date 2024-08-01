@@ -13,17 +13,12 @@ import numpy as np
 def proj(a, q):
     """Project vector a upon vector q"""
     a, q = np.array(a), np.array(q)
-    return (np.dot(q, a) / np.dot(q,q)) * q
+    return np.dot(q, a) / np.dot(q, q) * q
 
 
 def normalize(v):
     m = sum(v*v for v in v) ** (1/2)
     return [v/m for v in v]
-
-
-def is_orthonormal(matrix):
-    matrix = np.array(matrix)
-    return np.allclose(np.dot(matrix, matrix.T), np.eye(len(matrix)))
 
 
 def random_matrix():
@@ -38,6 +33,10 @@ def gram_schmidt(A):
     for j in range(A.shape[1]):   # A.shape[1] = n
         Q[:,j] = normalize(A[:,j] - sum(proj(A[:,j], Q[:,k]) for k in range(j)))
     return Q
+
+
+def is_orthogonal(matrix):
+    return np.allclose(np.dot(matrix, matrix.T), np.eye(len(matrix)))
 
 
 def qr_decomposition(A):
@@ -57,7 +56,7 @@ if __name__ == '__main__':
     # Demo on Gram Schmidt orthoganalization
     A = random_matrix()
     Q = gram_schmidt(A)
-    print("Q is orthonormal:", is_orthonormal(Q), "\n")
+    print("Q is orthonormal:", is_orthogonal(Q), "\n")
     print(A, Q.round(2), sep="\n\n")
     
     
@@ -65,4 +64,3 @@ if __name__ == '__main__':
     Q, R = qr_decomposition(A)
     print("\n\n\nmatreces A, Q, R, A-restored:", A, Q.round(2), R.round(2), np.dot(Q,R).round(1), sep="\n\n")
     
-
